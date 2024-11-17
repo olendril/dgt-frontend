@@ -1,47 +1,48 @@
 <script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <nav class="flex items-center justify-between content-center">
+      <button>Recherche</button>
+      <button>Guilde</button>
+      <button>
+        <RouterLink to="/">
+          <img src="../dfs09-dofawa_orig.png" alt="acceuil">
+        </RouterLink>
+      </button>
+      <button >Personnages</button>
+      <button >Profil</button>
+    </nav>
   </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <RouterView />
 </template>
 
 <style scoped>
+*{
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
 header {
-  line-height: 1.5;
+  height: 75px;
+  width: 100%;
+  background-color: #FFA124;
+  color: white;
+}
+header nav {
+  list-style: none;
+  justify-content: space-around;
+}
+header a {
+  color: white;
+  text-decoration: none;
+  font-size: 30px;
+}
+header img {
+  height: 125px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
