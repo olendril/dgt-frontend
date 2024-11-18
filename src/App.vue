@@ -1,23 +1,26 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import NavButton from './components/NavButton.vue'
 </script>
 
 <template>
-  <header>
-    <nav class="flex items-center justify-between content-center">
-      <button>Recherche</button>
-      <button>Guilde</button>
-      <button>
-        <RouterLink to="/">
+  <body>
+    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg">
+      <NavButton text="Recherche" />
+      <NavButton text="Guilde" />
+      <button class="translate-y-4">
+        <RouterLink  to="/">
           <img src="../dfs09-dofawa_orig.png" alt="acceuil">
         </RouterLink>
       </button>
-      <button >Personnages</button>
-      <button >Profil</button>
+      <NavButton text="Personnages" />
+      <NavButton text="Profil" />
     </nav>
-  </header>
-  <RouterView />
+
+    <RouterView />
+
+  </body>
+
 </template>
 
 <style scoped>
@@ -26,16 +29,12 @@ import HelloWorld from './components/HelloWorld.vue'
   font-family: "Open Sans", sans-serif;
 }
 
-header {
-  height: 75px;
+nav {
   width: 100%;
   background-color: #FFA124;
   color: white;
 }
-header nav {
-  list-style: none;
-  justify-content: space-around;
-}
+
 header a {
   color: white;
   text-decoration: none;
