@@ -6,7 +6,7 @@ import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
 
 <template>
   <body>
-    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg">
+    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg mb-20">
       <NavButton text="Recherche" />
       <NavDropdownGuild text="Guilde" path="/guild/new"/>
       <button class="translate-y-4">
