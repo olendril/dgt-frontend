@@ -1,13 +1,20 @@
 <script setup lang="ts">
-defineProps({
-  text: String
+import router from "@/router";
+
+const props = defineProps({
+  text: String,
+  path: String,
 })
+
+function nextLink() {
+  router.push({ path: props.path });
+}
 </script>
 
 <template>
-<button class="align-middle grow hover:bg-orange-300 basis-8 ">
-  {{ text }}
-</button>
+  <button @click="nextLink()"  class="align-middle grow hover:bg-orange-300 basis-8 ">
+    {{ text }}
+  </button>
 </template>
 
 <style scoped>

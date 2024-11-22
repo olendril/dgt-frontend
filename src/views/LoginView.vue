@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import {useAuthStore} from "@/stores/authStore";
+
+const authStore = useAuthStore();
+
+const onLogin = async () => {
+  window.location.href = await authStore.getRedirectLink();
+}
 
 </script>
 
@@ -8,13 +15,12 @@
         <p>
           Merci de vous connecter avec Discord pour accéder à l'application
         </p>
-        <button class="bg-gray-500">
-          Discord
+        <button @click="onLogin" class="bg-gray-500 items-center">
+          Connexion
         </button>
       </div>
   </section>
 </template>
 
 <style scoped>
-
 </style>
