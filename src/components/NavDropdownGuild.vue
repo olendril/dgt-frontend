@@ -24,16 +24,15 @@ let items = [
 </script>
 
 <template>
-<!--  <button @click="show != show"  class="align-middle grow hover:bg-orange-300 basis-8 ">
+  <button @click="show != show"  class="align-middle grow hover:bg-orange-300 basis-8 ">
     {{ text }}
   </button>
   <div class="grow absolute left-1/5 w-full h-full">
     <button class="translate-y-28   absolute bg-orange-500 hover:bg-orange-300 ">
       test
     </button>
-  </div>-->
+  </div>
 
-  <Menu :model="items" />
 </template>
 
 <style scoped>

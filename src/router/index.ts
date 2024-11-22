@@ -13,12 +13,12 @@ const router = createRouter({
     },
     {
       path: '/login',
-      name: 'home',
+      name: 'login',
       component: LoginView,
     },
     {
       path: '/guild/new',
-      name: 'home',
+      name: 'guildCreation',
       component: GuildCreationView,
     },
   ],
