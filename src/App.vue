@@ -11,7 +11,7 @@ import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
       <NavDropdownGuild text="Guilde" path="/guild/new"/>
       <button class="translate-y-4">
         <RouterLink  to="/">
-          <img src="../dfs09-dofawa_orig.png" alt="acceuil">
+          <img src="../dfs09-dofawa_orig.png" alt="acceuil" class="max-h-40" />
         </RouterLink>
       </button>
       <NavButton text="Personnages" />
