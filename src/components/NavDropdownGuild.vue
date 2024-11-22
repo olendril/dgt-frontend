@@ -50,7 +50,7 @@ async function requestGuild() {
 </script>
 
 <template>
-  <div onload="requestGuild()" class="align-middle grow hover:bg-orange-300 basis-8 flex">
+  <div onload="requestGuild()" class="align-middle grow hover:bg-orange-300 basis-8 flex uppercase">
     <button @click="change" class="grow">
       {{ text }}
     </button>
