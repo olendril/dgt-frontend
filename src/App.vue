@@ -6,9 +6,9 @@ import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
 
 <template>
   <body>
-    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg mb-20">
+    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg mb-20 text-2xl uppercase">
       <NavButton text="Recherche" />
-      <NavDropdownGuild text="Guilde" path="/guild/new"/>
+      <NavDropdownGuild text="Guilde" path="/guild/new" />
       <button class="translate-y-4">
         <RouterLink  to="/">
           <img src="../dfs09-dofawa_orig.png" alt="acceuil" class="max-h-40" />
@@ -27,7 +27,7 @@ import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
 <style scoped>
 *{
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: "roboto", sans-serif;
 }
 
 nav {
