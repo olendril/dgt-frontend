@@ -2,19 +2,20 @@
 import { RouterLink, RouterView } from 'vue-router'
 import NavButton from './components/NavButton.vue'
 import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
+import NavDropdownCharacter from "@/components/NavDropdownCharacter.vue";
 </script>
 
 <template>
   <body>
     <nav class="flex space-x-4 justify-around max-h-28 shadow-lg mb-20 text-2xl uppercase">
       <NavButton text="Recherche" />
-      <NavDropdownGuild text="Guilde" path="/guild/new" />
+      <NavDropdownGuild text="Guilde"/>
       <button class="translate-y-4">
         <RouterLink  to="/">
           <img src="../dfs09-dofawa_orig.png" alt="acceuil" class="max-h-40" />
         </RouterLink>
       </button>
-      <NavButton text="Personnages" />
+      <NavDropdownCharacter text="Personnages"/>
       <NavButton text="Profil" />
     </nav>
 

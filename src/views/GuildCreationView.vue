@@ -9,7 +9,6 @@ let server = ""
 
 const authStore = useAuthStore();
 
-
 async function createGuild() {
   return new Promise<string>(async (resolve, reject) => {
 
@@ -35,6 +34,7 @@ async function createGuild() {
 
   })
 }
+
 </script>
 
 <template>

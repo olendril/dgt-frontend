@@ -16,31 +16,32 @@ const props = defineProps({
 
 let showDropdown = ref(false);
 
-export interface GuildProps {
-  id: string;
-  name: string;
-  server: string;
-  code: string;
+export interface CharacterProps {
+  id: string,
+  name: string,
+  server: string,
+  class: string,
+  level: number,
+  guild_id: string,
+  dungeon_success: string[],
 }
 
-let guilds = reactive(<GuildProps[]> {})
+
+let characters = reactive(<CharacterProps[]> {})
 
 function requestGuild() {
   console.log(authStore.getAuthToken());
 
   return new Promise<string>(async (resolve, reject) => {
-      axios.get("http://localhost:8080/guilds", {
+      axios.get("http://localhost:8080/characters", {
         headers: {
           'Authorization': 'Bearer ' + authStore.getAuthToken(),
         }
       }).then(function (response) {
         // en cas de réussite de la requête
         //console.log(response.data);
-        let guildsTmp:GuildProps[] = response.data;
+        characters = response.data;
         //console.log(guildsTmp);
-        guilds = reactive(guildsTmp);
-        console.log("Guilds");
-        console.log(guilds);
         idList.value += 1;
         resolve(response.data);
       })
@@ -63,11 +64,11 @@ onMounted(() => requestGuild());
     </button>
 
     <ul @mouseover="showDropdown = true" @mouseout="showDropdown = false"  class="translate-y-28 absolute bg-dofawa_orange " v-if="showDropdown" :key="idList">
-      <li v-for="guild in guilds" :key="guild.id">
-        <RouterLink :to="{path: '/guild/' + guild.id}">{{guild.name}}</RouterLink>
+      <li v-for="character in characters" :key="character.id">
+        <RouterLink :to="{path: '/characters/' + character.id}">{{character.name}}</RouterLink>
       </li>
       <li>
-        <RouterLink to="/newGuild">Créer</RouterLink>
+        <RouterLink to="/newCharacter">Créer</RouterLink>
       </li>
     </ul>
   </div>

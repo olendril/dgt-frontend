@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import GuildCreationView from '../views/GuildCreationView.vue'
+import GuildInfoView from "@/views/GuildInfoView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,9 +18,14 @@ const router = createRouter({
       component: LoginView,
     },
     {
-      path: '/guild/new',
+      path: '/newGuild',
       name: 'guildCreation',
       component: GuildCreationView,
+    },
+    {
+      path: '/guild/:id',
+      name: 'guildInfo',
+      component: GuildInfoView,
     },
   ],
 })
