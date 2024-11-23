@@ -3,9 +3,10 @@ import axios from "axios";
 import {ref} from "vue";
 import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
+import OptionsServer from "@/components/OptionsServer.vue";
 
 let name = ""
-let server = ""
+let server = "Ombre"
 
 const authStore = useAuthStore();
 
@@ -45,7 +46,9 @@ async function createGuild() {
     </div>
     <div class="mb-5">
       <label for="server" class="block mb-2 text-sm font-medium">Serveur</label>
-      <input type="text" id="server" class="w-full p-2.5" placeholder="Dakal 4" required v-model="server"/>
+      <select name="server" id="server" class="w-full p-2.5" v-model="server">
+        <OptionsServer />
+      </select>
     </div>
     <button type="button" @click="createGuild()" class="">Créer</button>
   </form>
