@@ -2,28 +2,32 @@
 import router from "@/router";
 import axios from "axios";
 import {useAuthStore} from "@/stores/authStore";
+import {onBeforeMount, reactive, ref} from "vue";
 
 const authStore = useAuthStore();
 
+// This variable is to update the list
+let idList = ref(0)
 
 const props = defineProps({
   text: String,
   path: String,
 })
 
-function newGuild() {
-  router.push({ path: "/guild/new" });
+let showDropdown = ref(false);
+
+interface GuildProps {
+  id: string;
+  name: string;
+  server: string;
+  code: string;
 }
 
+let guilds = reactive(<GuildProps[]> {})
 
-let show = true;
-function change () {
-  show = !show
-}
+function requestGuild() {
+  console.log(authStore.getAuthToken());
 
-let guilds = []
-
-async function requestGuild() {
   return new Promise<string>(async (resolve, reject) => {
       axios.get("http://localhost:8080/guilds", {
         headers: {
@@ -31,12 +35,13 @@ async function requestGuild() {
         }
       }).then(function (response) {
         // en cas de réussite de la requête
-        console.log(response.data);
-        let guildsTmp = response.data;
-        for (let i = 0; i < guildsTmp.length; i++) {
-          let guild = guildsTmp[i]
-          guilds.push(guild.name);
-        }
+        //console.log(response.data);
+        let guildsTmp:GuildProps[] = response.data;
+        //console.log(guildsTmp);
+        guilds = reactive(guildsTmp);
+        console.log("Guilds");
+        console.log(guilds);
+        idList.value += 1;
         resolve(response.data);
       })
       .catch(function (error) {
@@ -47,25 +52,29 @@ async function requestGuild() {
   })
 }
 
+import { onMounted } from 'vue';
+onMounted(() => requestGuild());
 </script>
 
 <template>
-  <div onload="requestGuild()" class="align-middle grow hover:bg-orange-300 basis-8 flex">
-    <button @click="change" class="grow">
+  <div class="align-middle grow hover:bg-orange-300 basis-8 flex">
+    <button @mouseover="showDropdown = true" @mouseout="showDropdown = false" class="grow">
       {{ text }}
     </button>
-    <button @click="newGuild" v-if="show" class="translate-y-28 absolute bg-orange-500 hover:bg-orange-300 " v-for="item in guilds" :key="item.id">
-    </button>
-    <button @click="newGuild" v-if="show" class="translate-y-36 absolute bg-orange-500 hover:bg-orange-300 ">
-      Créer
-    </button>
+
+    <ul class="translate-y-28 absolute bg-orange-500 " v-if="showDropdown" :key="idList">
+      <li v-for="guild in guilds" :key="guild.id">
+        <a href="">{{guild.name}}</a>
+      </li>
+      <li>
+        <RouterLink to="/guild/new">Créer</RouterLink>
+      </li>
+    </ul>
   </div>
 
 
 </template>
 
 <style scoped>
-.dropdown {
-  left: 20%;
-}
+
 </style>
