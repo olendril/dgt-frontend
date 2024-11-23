@@ -57,8 +57,8 @@ onMounted(() => requestGuild());
 </script>
 
 <template>
-  <div class="align-middle grow hover:bg-orange-300 basis-8 flex">
-    <button @mouseover="showDropdown = true" @mouseout="showDropdown = false" class="grow">
+  <div class="align-middle grow hover:bg-orange-300 basis-8 flex uppercase">
+    <button @mouseover="showDropdown = true" @mouseout="showDropdown = false" class="grow uppercase">
       {{ text }}
     </button>
 

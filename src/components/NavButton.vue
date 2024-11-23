@@ -12,7 +12,7 @@ function nextLink() {
 </script>
 
 <template>
-  <button @click="nextLink()"  class="align-middle grow hover:bg-orange-300 basis-8 ">
+  <button @click="nextLink()"  class="align-middle grow hover:bg-orange-300 basis-8 uppercase">
     {{ text }}
   </button>
 </template>
