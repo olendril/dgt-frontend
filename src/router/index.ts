@@ -4,6 +4,8 @@ import LoginView from '../views/LoginView.vue'
 import GuildCreationView from '../views/GuildCreationView.vue'
 import GuildInfoView from "@/views/GuildInfoView.vue";
 import CharacterCreationView from "@/views/CharacterCreationView.vue";
+import CharacterInfoView from "@/views/CharacterInfoView.vue";
+import SearchView from "@/views/SearchView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +34,16 @@ const router = createRouter({
       path: '/guild/:id',
       name: 'guildInfo',
       component: GuildInfoView,
+    },
+    {
+      path: '/characters/:id',
+      name: 'characterInfo',
+      component: CharacterInfoView,
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchView,
     },
   ],
 })

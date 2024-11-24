@@ -47,7 +47,9 @@ onMounted(() => getGuildInfo());
 <template>
   <p class="m-52 max-w-sm mx-auto shadow-lg rounded-lg p-8" :key="refresh">
     Nom : {{guild.name}}
+    <br>
     Code d'invitation : {{guild.code}}
+    <br>
     Server : {{guild.server}}
   </p>
 </template>
