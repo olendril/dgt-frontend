@@ -58,17 +58,17 @@ onMounted(() => requestGuild());
 </script>
 
 <template>
-  <div class="align-middle grow hover:bg-orange-300 basis-8 flex uppercase">
-    <button @mouseover="showDropdown = true" @mouseout="showDropdown = false"  class="grow uppercase">
+  <div @mouseover="showDropdown = true" @mouseleave="showDropdown = false" class="align-middle grow basis-8 uppercase rid-cols-1 text-center">
+    <button   class="w-full uppercase min-h-28 hover:bg-orange-300">
       {{ text }}
     </button>
 
-    <ul @mouseover="showDropdown = true" @mouseout="showDropdown = false"  class="translate-y-28 absolute bg-dofawa_orange " v-if="showDropdown" :key="idList">
-      <li v-for="character in characters" :key="character.id">
+    <ul class="bg-dofawa_orange  border-y border-separator_orange" v-if="showDropdown" :key="idList">
+      <li class="hover:bg-orange-300" v-for="character in characters" :key="character.id">
         <RouterLink :to="{path: '/characters/' + character.id}">{{character.name}}</RouterLink>
       </li>
-      <li>
-        <RouterLink to="/newCharacter">Créer</RouterLink>
+      <li class="hover:bg-orange-300 bg-white text-black border-t border-separator_orange">
+        <RouterLink to="/newCharacter">+ Créer</RouterLink>
       </li>
     </ul>
   </div>

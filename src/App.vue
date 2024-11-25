@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import NavButton from './components/NavButton.vue'
 import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
 import NavDropdownCharacter from "@/components/NavDropdownCharacter.vue";
+import NavDropDownProfil from "@/components/NavDropDownProfil.vue";
 </script>
 
 <template>
@@ -16,7 +17,7 @@ import NavDropdownCharacter from "@/components/NavDropdownCharacter.vue";
         </RouterLink>
       </button>
       <NavDropdownCharacter text="Personnages"/>
-      <NavButton text="Profil" />
+      <NavDropDownProfil text="Profil" />
     </nav>
 
     <RouterView />

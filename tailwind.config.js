@@ -11,6 +11,7 @@ export default {
         },
         colors: {
             'dofawa_orange': '#FFA124',
+            'separator_orange': '#E08E20',
         }
     },
   },

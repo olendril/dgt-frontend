@@ -10,6 +10,12 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
 
+import Tabs from 'primevue/tabs';
+import TabList from 'primevue/tablist';
+import Tab from 'primevue/tab';
+import TabPanels from 'primevue/tabpanels';
+import TabPanel from 'primevue/tabpanel';
+
 import { FilterMatchMode } from '@primevue/core/api';
 import { InputText} from "primevue";
 
@@ -170,37 +176,52 @@ watch(
 <template>
 
 <div class="p-12">
-  {{ character.name }}
-  <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
-             :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" tableStyle="min-width: 50rem" :key="refresh" filterDisplay="row"
-             sortField="level" :sortOrder="1">
-    <template #empty> No customers found. </template>
-    <template #loading> Loading customers data. Please wait. </template>
-    <Column field="name" sortable filter-field="name" header="Nom">
-      <template #body="{ data }">
-        {{ data.name }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="Rechercher par nom" />
-      </template>
-    </Column>
-    <Column field="successName" sortable filter-field="successName" header="Nom du Succés">
-      <template #body="{ data }">
-        {{ data.successName }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="Rechercher par nom" />
-      </template>
-    </Column>
-    <Column field="successDone" sortable  header="Fait">
-      <template #body="slotProps">
-        <div class="flex items-center gap-2">
-          <input type="checkbox" v-model="slotProps.data.successDone"/>
-        </div>
-      </template>
-    </Column>
-    <Column field="level" sortable  header="Niveau"></Column>
-  </DataTable>
+  <div class="p-4 text-2xl">
+    <p>{{ character.name }} - Niveau.{{character.level}}</p>
+  </div>
+  <Tabs value="0">
+    <TabList>
+      <Tab value="0">Donjons</Tab>
+      <Tab value="1">Avis de Recherche</Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel value="0">
+        <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
+                   :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" tableStyle="min-width: 50rem" :key="refresh" filterDisplay="row"
+                   sortField="level" :sortOrder="1">
+          <template #empty> Aucun résultat trouvé. </template>
+          <template #loading> Chargement des données, patience est mère de vertue! </template>
+          <Column field="name" sortable filter-field="name" header="Nom">
+            <template #body="{ data }">
+              {{ data.name }}
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="Rechercher par nom" />
+            </template>
+          </Column>
+          <Column field="successName" sortable filter-field="successName" header="Nom du Succés">
+            <template #body="{ data }">
+              {{ data.successName }}
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="Rechercher par nom" />
+            </template>
+          </Column>
+          <Column field="successDone" sortable  header="Fait">
+            <template #body="slotProps">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" v-model="slotProps.data.successDone"/>
+              </div>
+            </template>
+          </Column>
+          <Column field="level" sortable  header="Niveau"></Column>
+        </DataTable>
+      </TabPanel>
+      <TabPanel value="1">
+        <p>WIP</p>
+      </TabPanel>
+    </TabPanels>
+  </Tabs>
   <button @click="submitSuccess" class="bg-dofawa_orange rounded-lg p-8 m-20">
     Sauvegarder
   </button>
