@@ -176,13 +176,22 @@ watch(
 <template>
 
 <div class="p-12">
-  <div class="p-4 text-2xl">
-    <p>{{ character.name }} - Niveau.{{character.level}}</p>
+  <div class="p-4 text-2xl flex items-end">
+    <p class="text-4xl font-bold underline pr-2">{{ character.name }}</p>
+    <p>- Niveau.{{ character.level }}</p>
+  </div>
+  <div class="flex items-center pb-4">
+    <p class="pr-2">N'oublie pas de</p>
+    <button @click="submitSuccess" class="bg-dofawa_orange rounded-lg p-1">
+      SAUVEGARDER
+    </button>
+    <p class="pl-2">!</p>
   </div>
   <Tabs value="0">
     <TabList>
       <Tab value="0">Donjons</Tab>
-      <Tab value="1">Avis de Recherche</Tab>
+      <Tab disabled>Avis de Recherche</Tab>
+      <Tab disabled>Autres</Tab>
     </TabList>
     <TabPanels>
       <TabPanel value="0">
@@ -216,9 +225,6 @@ watch(
           </Column>
           <Column field="level" sortable  header="Niveau"></Column>
         </DataTable>
-      </TabPanel>
-      <TabPanel value="1">
-        <p>WIP</p>
       </TabPanel>
     </TabPanels>
   </Tabs>
