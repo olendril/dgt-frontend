@@ -188,7 +188,7 @@ watch(
     <p class="pl-2">!</p>
   </div>
   <Tabs value="0">
-    <TabList>
+    <TabList class="text-xl flex w-min">
       <Tab value="0">Donjons</Tab>
       <Tab disabled>Avis de Recherche</Tab>
       <Tab disabled>Autres</Tab>
@@ -196,7 +196,7 @@ watch(
     <TabPanels>
       <TabPanel value="0">
         <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
-                   :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" tableStyle="min-width: 50rem" :key="refresh" filterDisplay="row"
+                   :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows tableStyle="min-width: 50rem" :key="refresh" filterDisplay="row"
                    sortField="level" :sortOrder="1">
           <template #empty> Aucun résultat trouvé. </template>
           <template #loading> Chargement des données, patience est mère de vertue! </template>
