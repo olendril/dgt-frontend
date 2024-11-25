@@ -5,6 +5,8 @@ import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
 import NavDropdownCharacter from "@/components/NavDropdownCharacter.vue";
 import NavDropDownProfil from "@/components/NavDropDownProfil.vue";
 
+import Button from 'primevue/button';
+
 function toggleDarkMode() {
   document.documentElement.classList.toggle('p-app-dark');
 }

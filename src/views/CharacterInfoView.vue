@@ -19,7 +19,14 @@ import TabPanel from 'primevue/tabpanel';
 
 
 import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
-import { InputText} from "primevue";
+import { InputText } from "primevue";
+
+import Slider from 'primevue/slider';
+import Button from 'primevue/button';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
+import Inplace from 'primevue/inplace';
+import { InputNumber } from 'primevue';
 
 const route = useRoute()
 const authStore = useAuthStore();
@@ -51,7 +58,8 @@ const initFilters = () => {
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
     successName: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-    successDone: { value: null, matchMode: FilterMatchMode.EQUALS }
+    successDone: { value: null, matchMode: FilterMatchMode.EQUALS },
+    level: { value: [0, 200], matchMode: FilterMatchMode.BETWEEN }
   };
 };
 
@@ -191,10 +199,22 @@ watch(
 <template>
 
 <div class="p-12">
-  <div class="p-4 text-2xl flex items-end" :key="refresh">
-    <p class="text-4xl font-bold underline pr-2">{{ character.name }}</p>
-    <p>- Niveau.{{ character.level }}</p>
+  <div class="text-2xl flex items-center pb-4" :key="refresh">
+    <p class="text-4xl font-bold underline pb-2 pr-2">{{ character.name }}</p>
+    <p>- Niveau.</p>
+    <Inplace class="text-2xl">
+      <template #display>
+        {{ character.level }}
+      </template>
+      <template #content="{ closeCallback }">
+        <span class="inline-flex items-center gap-2">
+            <InputNumber v-model="character.level" input-id="minmax" :min="1" :max="200" autofocus />
+            <Button icon="pi pi-check" text @click="closeCallback" />
+        </span>
+      </template>
+    </Inplace>
   </div>
+
   <div class="flex items-center pb-4">
     <p class="pr-2">N'oublie pas de</p>
     <button @click="submitSuccess" class="bg-dofawa_orange rounded-lg p-1">
@@ -211,21 +231,31 @@ watch(
     <TabPanels>
       <TabPanel value="0">
         <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
-                   :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows tableStyle="min-width: 50rem" :key="refresh" filterDisplay="row"
-                   :global-filter-fields="['name','successName']">
+                   :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows :key="refresh" filterDisplay="row"
+                   :global-filter-fields="['name','successName','level']" sortField="level" :sortOrder="1">
           <template #header>
             <div class="flex justify-between">
-              <Button type="button" label="Clear" outlined @click="clearFilter()" />
+              <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
               <IconField>
+                <InputIcon>
+                  <i class="pi pi-search" />
+                </InputIcon>
                 <InputText v-model="filters['global'].value" placeholder="Recherche" />
               </IconField>
             </div>
           </template>
           <template #empty> Aucun résultat trouvé. </template>
           <template #loading> Chargement des données, patience est mère de vertue! </template>
-          <Column field="name" sortable filter-field="name" header="Nom">
+          <Column field="name" sortable filter-field="name" header="Nom" class="text-xl">
             <template #body="{ data }">
               {{ data.name }}
+            </template>
+          </Column>
+          <Column field="successDone" sortable  header="Fait" class="w-0.5">
+            <template #body="slotProps">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" v-model="slotProps.data.successDone"/>
+              </div>
             </template>
           </Column>
           <Column field="successName" sortable filter-field="successName" header="Nom du Succés">
@@ -233,14 +263,15 @@ watch(
               {{ data.successName }}
             </template>
           </Column>
-          <Column field="successDone" sortable  header="Fait">
-            <template #body="slotProps">
-              <div class="flex items-center gap-2">
-                <input type="checkbox" v-model="slotProps.data.successDone"/>
+          <Column field="level" sortable  header="Niveau" class="w-0.5">
+            <template #filter="{ filterModel }">
+              <Slider v-model="filterModel.value" range></Slider>
+              <div class="flex items-center justify-between px-2">
+                <span>{{ filterModel.value ? filterModel.value[0] : 0 }}</span>
+                <span>{{ filterModel.value ? filterModel.value[1] : 200 }}</span>
               </div>
             </template>
           </Column>
-          <Column field="level" sortable  header="Niveau"></Column>
         </DataTable>
       </TabPanel>
     </TabPanels>
