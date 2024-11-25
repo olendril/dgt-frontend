@@ -4,6 +4,10 @@ import NavButton from './components/NavButton.vue'
 import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
 import NavDropdownCharacter from "@/components/NavDropdownCharacter.vue";
 import NavDropDownProfil from "@/components/NavDropDownProfil.vue";
+
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('p-app-dark');
+}
 </script>
 
 <template>
@@ -20,7 +24,13 @@ import NavDropDownProfil from "@/components/NavDropDownProfil.vue";
       <NavDropDownProfil text="Profil" />
     </nav>
 
+
     <RouterView />
+
+    <footer class="flex space-x-4 justify-around max-h-28">
+      <p>coffer</p>
+      <Button label="Toggle Dark Mode" @click="toggleDarkMode()" />
+    </footer>
 
   </body>
 

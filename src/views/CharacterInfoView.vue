@@ -10,13 +10,15 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
 
+
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
 
-import { FilterMatchMode } from '@primevue/core/api';
+
+import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
 import { InputText} from "primevue";
 
 const route = useRoute()
@@ -42,10 +44,28 @@ let dungeons: Map<string, DungeonInfo> = new Map()
 
 let refresh = ref(0)
 
-const filters = ref({
-  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  successName: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
-});
+const filters = ref();
+
+const initFilters = () => {
+  filters.value = {
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    successName: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    representative: { value: null, matchMode: FilterMatchMode.IN },
+    date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+    balance: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+    status: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+    activity: { value: [0, 100], matchMode: FilterMatchMode.BETWEEN },
+    verified: { value: null, matchMode: FilterMatchMode.EQUALS }
+  };
+};
+
+initFilters();
+
+const clearFilter = () => {
+  initFilters();
+};
+
 
 async function getCharacterInfo() {
   return new Promise<string>(async (resolve, reject) => {
@@ -197,23 +217,28 @@ watch(
       <TabPanel value="0">
         <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
                    :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows tableStyle="min-width: 50rem" :key="refresh" filterDisplay="row"
-                   sortField="level" :sortOrder="1">
+                   :global-filter-fields="['name','successName']">
+          <template #header>
+            <div class="flex justify-between">
+              <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
+              <IconField>
+                <InputIcon>
+                  <i class="pi pi-search" />
+                </InputIcon>
+                <InputText v-model="filters['global'].value" placeholder="Recherche" />
+              </IconField>
+            </div>
+          </template>
           <template #empty> Aucun résultat trouvé. </template>
           <template #loading> Chargement des données, patience est mère de vertue! </template>
           <Column field="name" sortable filter-field="name" header="Nom">
             <template #body="{ data }">
               {{ data.name }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <InputText v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="Rechercher par nom" />
-            </template>
           </Column>
           <Column field="successName" sortable filter-field="successName" header="Nom du Succés">
             <template #body="{ data }">
               {{ data.successName }}
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <InputText v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="Rechercher par nom" />
             </template>
           </Column>
           <Column field="successDone" sortable  header="Fait">
