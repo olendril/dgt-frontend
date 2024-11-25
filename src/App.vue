@@ -35,7 +35,7 @@ function toggleDarkMode() {
       </a>
       <p class="text-center">Dofus est un MMORPG édité par Ankama. "dofuccès" est un site non-officiel sans aucun lien avec Ankama.
         Certaines illustrations sont la propriété d'Ankama Studio et de Dofus - Tous droits réservés
-        Copyright © 2024 Dofus pour les Noobs - Merci de ne pas copier le contenu de ce site sans autorisation.</p>
+        Copyright © 2024 Dofuccès - Merci de ne pas copier le contenu de ce site sans autorisation.</p>
       <Button label="Toggle Dark Mode" @click="toggleDarkMode()" />
     </footer>
 
