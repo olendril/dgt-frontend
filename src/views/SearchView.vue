@@ -2,6 +2,9 @@
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import axios from "axios";
+import type {DungeonInfo} from "@/views/CharacterInfoView.vue";
+
+let dungeons = Map<string, DungeonInfo>
 
 async function getDungeonSuccess() {
   return new Promise<string>(async (resolve, reject) => {
