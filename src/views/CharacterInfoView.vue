@@ -51,6 +51,7 @@ const initFilters = () => {
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
     successName: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    successDone: { value: null, matchMode: FilterMatchMode.EQUALS }
   };
 };
 
@@ -214,11 +215,8 @@ watch(
                    :global-filter-fields="['name','successName']">
           <template #header>
             <div class="flex justify-between">
-              <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
+              <Button type="button" label="Clear" outlined @click="clearFilter()" />
               <IconField>
-                <InputIcon>
-                  <i class="pi pi-search" />
-                </InputIcon>
                 <InputText v-model="filters['global'].value" placeholder="Recherche" />
               </IconField>
             </div>
