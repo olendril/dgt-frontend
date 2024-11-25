@@ -191,7 +191,7 @@ watch(
 <template>
 
 <div class="p-12">
-  <div class="p-4 text-2xl flex items-end">
+  <div class="p-4 text-2xl flex items-end" :key="refresh">
     <p class="text-4xl font-bold underline pr-2">{{ character.name }}</p>
     <p>- Niveau.{{ character.level }}</p>
   </div>
