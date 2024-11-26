@@ -6,6 +6,7 @@ import GuildInfoView from "@/views/GuildInfoView.vue";
 import CharacterCreationView from "@/views/CharacterCreationView.vue";
 import CharacterInfoView from "@/views/CharacterInfoView.vue";
 import SearchView from "@/views/SearchView.vue";
+import ResultDungeonView from "@/views/ResultDungeonView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/search',
       name: 'search',
       component: SearchView,
+    },
+    {
+      path: '/search/dungeons/:id',
+      name: 'searchDungeonResult',
+      component: ResultDungeonView,
     },
   ],
 })
