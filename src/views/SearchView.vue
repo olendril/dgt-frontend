@@ -50,26 +50,72 @@ async function getDungeonSuccess() {
 
 import { onMounted } from 'vue';
 import router from "@/router";
+import TabPanel from "primevue/tabpanel";
+import TabList from "primevue/tablist";
+import Tab from "primevue/tab";
+import Tabs from "primevue/tabs";
+import TabPanels from "primevue/tabpanels";
+import {FilterMatchMode, FilterOperator} from "@primevue/core/api";
+import {InputText} from "primevue";
+import IconField from "primevue/iconfield";
+import Button from "primevue/button";
+import InputIcon from "primevue/inputicon";
+import Slider from "primevue/slider";
 onMounted(() => getDungeonSuccess());
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  level: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+
+
+
+
 </script>
 
 <template>
-  Recherche de Donjon pour la guilde
-<div class="flex items-center justify-center w-full basis-8">
-  <DataTable :value="dungeons" :key="refresh"  sortField="level" :sortOrder="1" paginator :rows="10"
-             :rowsPerPageOptions="[5, 10, 20, 50]" >
-    <Column field="name" sortable header="Name" > </Column>
-    <Column field="level" sortable header="Level" > </Column>
-    <Column  label="Level">
-      <template #body="{ data}">
-        <router-link :to="'/search/dungeons/' + data.id">
-          Go
-        </router-link>
-      </template>
-    </Column>
-
-  </DataTable>
-</div>
+  <p class="text-2xl text-center pb-4">Recherche d'équipier :</p>
+  <div class="flex items-center justify-center w-full basis-8 pb-12">
+    <Tabs value="0">
+      <TabList class="text-xl flex w-min">
+        <Tab value="0">Donjons</Tab>
+        <Tab disabled>Avis de Recherche</Tab>
+        <Tab disabled>Autres</Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel value="0">
+          <DataTable :value="dungeons" :key="refresh" filterDisplay="row" sortField="level"  :sortOrder="1" paginator :rows="10"
+                     :rowsPerPageOptions="[5, 10, 20, 50]" :globalFilterFields="['name', 'level']">
+            <template #header>
+              <div class="w-full flex items-center justify-center">
+                <IconField>
+                  <InputIcon>
+                    <i class="pi pi-search" />
+                  </InputIcon>
+                  <InputText v-model="filters['global'].value" placeholder="Recherche" />
+                </IconField>
+              </div>
+            </template>
+            <template #empty> Aucun résultat trouvé. </template>
+            <Column field="name" sortable header="Name"> </Column>
+            <Column field="level" sortable header="Level">
+            </Column>
+            <Column  label="go">
+              <template #body="{ data }">
+                <router-link :to="'/search/dungeons/' + data.id">
+                  <button class="bg-dofawa_orange rounded-lg p-1 text-white text-center">
+                    GO !
+                  </button>
+                </router-link>
+              </template>
+            </Column>
+          </DataTable>
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  </div>
 </template>
 
 <style scoped>

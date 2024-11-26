@@ -85,25 +85,30 @@ function isSuccessDone(missingSuccess: string[] , success: string): boolean {
 }
 
 import { onMounted } from 'vue';
+import {FilterMatchMode, FilterOperator} from "@primevue/core/api";
 onMounted(() => getDungeonSuccess());
 onMounted(() => searchDungeonSuccess());
 
 </script>
-
 <template>
-  <DataTable :value="searchResult" :key="refresh"  sortField="level" :sortOrder="1" paginator :rows="10"
-             :rowsPerPageOptions="[5, 10, 20, 50]" >
-    <Column field="character_name" sortable header="Name" > </Column>
-    <Column field="level" sortable header="Level" > </Column>
-    <Column v-for="[key, value] of success"  :header="value">
-      <template #body="slotProps">
-        <div class="flex items-center gap-2">
-          <input type="checkbox" disabled :checked="isSuccessDone(slotProps.data.missing_success, key)" />
-        </div>
-      </template>
-    </Column>
+  <div class="text-2xl pl-8">
+    <p>Résultats :</p>
+  </div>
+  <div class="p-12">
+    <DataTable :value="searchResult" :key="refresh"  sortField="level" :sortOrder="1" paginator :rows="10"
+               :rowsPerPageOptions="[5, 10, 20, 50]">
+      <Column field="character_name" sortable header="Name" > </Column>
+      <Column field="level" sortable header="Level" > </Column>
+      <Column sortable v-for="[key, value] of success"  :header="value">
+        <template #body="slotProps">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" disabled :checked="isSuccessDone(slotProps.data.missing_success, key)" />
+          </div>
+        </template>
+      </Column>
 
-  </DataTable>
+    </DataTable>
+  </div>
 </template>
 
 <style scoped>

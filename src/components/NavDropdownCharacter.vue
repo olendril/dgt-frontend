@@ -63,7 +63,7 @@ onMounted(() => requestGuild());
       {{ text }}
     </button>
 
-    <ul class="bg-dofawa_orange  border-y border-separator_orange" v-if="showDropdown" :key="idList">
+    <ul class="bg-dofawa_orange  border-y border-separator_orange" v-if="showDropdown" :key="idList" z-1>
       <li class="hover:bg-orange-300" v-for="character in characters" :key="character.id">
         <RouterLink :to="{path: '/characters/' + character.id}">{{character.name}}</RouterLink>
       </li>
