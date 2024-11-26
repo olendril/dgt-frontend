@@ -57,7 +57,7 @@ onMounted(() => requestGuild());
 </script>
 
 <template>
-  <div  @mouseover="showDropdown = true" @mouseleave="showDropdown = false"  class="align-middle grow basis-8 grid-cols-1 text-center">
+  <div  @mouseover="showDropdown = true" @mouseleave="showDropdown = false"  class="align-middle grow basis-8 grid-cols-1 text-center z-3">
     <button   class="w-full uppercase uppercase min-h-28 hover:bg-orange-300">
       {{ text }}
     </button>

@@ -65,7 +65,7 @@ onMounted(() => getDungeonSuccess());
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
   level: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
@@ -86,7 +86,7 @@ const filters = ref({
       </TabList>
       <TabPanels>
         <TabPanel value="0">
-          <DataTable :value="dungeons" :key="refresh" filterDisplay="row" sortField="level"  :sortOrder="1" paginator :rows="10"
+          <DataTable  v-model:filters="filters" :value="dungeons" :key="refresh" filterDisplay="row" sortField="level"  :sortOrder="1" paginator :rows="10"
                      :rowsPerPageOptions="[5, 10, 20, 50]" :globalFilterFields="['name', 'level']">
             <template #header>
               <div class="w-full flex items-center justify-center">
@@ -99,8 +99,8 @@ const filters = ref({
               </div>
             </template>
             <template #empty> Aucun résultat trouvé. </template>
-            <Column field="name" sortable header="Name"> </Column>
-            <Column field="level" sortable header="Level">
+            <Column field="name" filter-field="name" sortable header="Name"> </Column>
+            <Column field="level" filter-field="level" sortable header="Level">
             </Column>
             <Column  label="go">
               <template #body="{ data }">

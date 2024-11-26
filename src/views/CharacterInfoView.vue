@@ -171,6 +171,28 @@ function buildTable() {
   console.log(dungeonsTable)
 }
 
+async function updateLevel() {
+  return new Promise<string>(async (resolve, reject) => {
+
+    axios.post("http://localhost:8080/characters/" + character.id + "/level/" + character.level, {}, {
+      headers: {
+        'Authorization': 'Bearer ' + authStore.getAuthToken(),
+      }
+    }).then(function (response) {
+      // en cas de réussite de la requête
+      console.log(response.data);
+
+      resolve(response.data);
+    })
+        .catch(function (error) {
+          // en cas d’échec de la requête
+          console.log(error);
+          reject(error);
+        })
+
+  })
+}
+
 import { onMounted } from 'vue';
 import router from "@/router";
 onMounted(() => getCharacterInfo());
@@ -209,7 +231,7 @@ watch(
       <template #content="{ closeCallback }">
         <span class="inline-flex items-center gap-2">
             <InputNumber v-model="character.level" input-id="minmax" :min="1" :max="200" autofocus />
-            <Button icon="pi pi-check" text @click="closeCallback" />
+            <Button icon="pi pi-check" text @click="closeCallback(); updateLevel()" />
         </span>
       </template>
     </Inplace>
@@ -263,7 +285,7 @@ watch(
               {{ data.successName }}
             </template>
           </Column>
-          <Column field="level" sortable  header="Niveau" class="w-0.5">
+          <Column field="level" sortable filter-field="level"  header="Niveau" class="w-0.5">
             <template #filter="{ filterModel }">
               <Slider v-model="filterModel.value" range></Slider>
               <div class="flex items-center justify-between px-2">

@@ -14,7 +14,7 @@ function toggleDarkMode() {
 
 <template>
   <body>
-    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg mb-20 text-2xl uppercase z-1">
+    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg mb-20 text-2xl uppercase z-2">
       <NavButton text="Recherche" path="/search"/>
       <NavDropdownGuild text="Guilde"/>
       <button class="translate-y-4">
@@ -26,10 +26,12 @@ function toggleDarkMode() {
       <NavDropDownProfil text="Profil" />
     </nav>
 
+    <div class="z-0">
+      <RouterView />
 
-    <RouterView />
+    </div>
 
-    <footer class="flex space-x-4 justify-between max-h-28 p-2">
+    <footer class="flex space-x-4 justify-between max-h-28 p-2 z-1">
       <a href='https://ko-fi.com/O5O016KSBS' target='_blank'>
         <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
       </a>
