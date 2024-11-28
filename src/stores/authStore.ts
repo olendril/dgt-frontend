@@ -5,10 +5,10 @@ export const useAuthStore = defineStore("authStore", {
     state: () => ({}),
 
     actions: {
-        async getRedirectLink() {
+        async getRedirectLink(baseUrl:string) {
             return new Promise<string>(async (resolve, reject) => {
 
-                axios.get(import.meta.env.BASE_URL +  "/login").then(function (response) {
+                axios.get(baseUrl +  "/login").then(function (response) {
                     // en cas de réussite de la requête
                     console.log(response.data.link);
 

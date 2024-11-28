@@ -7,7 +7,7 @@ const authStore = useAuthStore();
 let internalErrorGlobal = ref(false);
 
 const onLogin = async () => {
-  await authStore.getRedirectLink().then((url: string) => {
+  await authStore.getRedirectLink(import.meta.env.VITE_BACKEND_URL).then((url: string) => {
     window.location.href = url;
   }).catch((err: Error) => {
     internalErrorGlobal.value = false;
