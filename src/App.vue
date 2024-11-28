@@ -6,6 +6,7 @@ import NavDropdownCharacter from "@/components/NavDropdownCharacter.vue";
 import NavDropDownProfil from "@/components/NavDropDownProfil.vue";
 import Message from 'primevue/message';
 
+
 import Button from 'primevue/button';
 
 function toggleDarkMode() {
@@ -14,8 +15,8 @@ function toggleDarkMode() {
 </script>
 
 <template>
-  <body>
-    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg mb-20 text-2xl uppercase z-2">
+  <body class="flex flex-col h-screen justify-between">
+    <nav class="flex space-x-4 justify-around max-h-28 shadow-lg text-2xl uppercase z-2">
       <NavButton text="Recherche" path="/search"/>
       <NavDropdownGuild text="Guilde"/>
       <button class="translate-y-4">
@@ -27,7 +28,7 @@ function toggleDarkMode() {
       <NavDropDownProfil text="Profil" />
     </nav>
 
-    <div class="z-0">
+    <div class="">
       <RouterView />
 
     </div>
