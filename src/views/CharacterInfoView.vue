@@ -9,7 +9,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
-
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
@@ -87,6 +87,8 @@ async function getCharacterInfo() {
         .catch(function (error) {
           // en cas d’échec de la requête
           console.log(error);
+          internalErrorGlobal.value = false
+          internalErrorGlobal.value = true
           reject(error);
         })
   })
@@ -113,6 +115,8 @@ async function getDungeonSuccess() {
         .catch(function (error) {
           // en cas d’échec de la requête
           console.log(error);
+          internalErrorGlobal.value = false
+          internalErrorGlobal.value = true
           reject(error);
         })
   })
@@ -137,13 +141,15 @@ async function submitSuccess() {
       }
     }).then(function (response) {
       // en cas de réussite de la requête
-      console.log(response.data);
+      saveSuccessGlobal.value = false
+      saveSuccessGlobal.value = true
 
       resolve(response.data);
-      router.push({ path: "/" });
     })
         .catch(function (error) {
           // en cas d’échec de la requête
+          saveErrorGlobal.value = false
+          saveErrorGlobal.value = true
           console.log(error);
           reject(error);
         })
@@ -172,7 +178,7 @@ function buildTable() {
 }
 
 async function updateLevel() {
-  return new Promise<string>(async (resolve, reject) => {
+  await new Promise<string>(async (resolve, reject) => {
 
     axios.post("http://localhost:8080/characters/" + character.id + "/level/" + character.level, {}, {
       headers: {
@@ -180,21 +186,24 @@ async function updateLevel() {
       }
     }).then(function (response) {
       // en cas de réussite de la requête
-      console.log(response.data);
-
+      saveSuccessGlobal.value = false
+      saveSuccessGlobal.value = true
       resolve(response.data);
     })
-        .catch(function (error) {
-          // en cas d’échec de la requête
-          console.log(error);
-          reject(error);
-        })
+      .catch(function (error) {
+        // en cas d’échec de la requête
+        saveErrorGlobal.value = false
+        saveErrorGlobal.value = true
 
+        console.log(error);
+        reject(error);
+      })
   })
 }
 
 import { onMounted } from 'vue';
 import router from "@/router";
+import Message from "primevue/message";
 onMounted(() => getCharacterInfo());
 onMounted(() => getDungeonSuccess());
 onMounted(() => {
@@ -216,9 +225,37 @@ watch(
     }
 )
 
+onBeforeRouteLeave((to, from) => {
+  const answer = window.confirm(
+      'Avez-vous bien pensez à sauvegarder avant de quitter la page ?'
+  )
+  // cancel the navigation and stay on the same page
+  if (!answer) return false
+})
+
+const userData = ref()
+
+// same as beforeRouteUpdate option but with no access to `this`
+onBeforeRouteUpdate(async (to, from) => {
+  // only fetch the user if the id changed as maybe only the query or the hash changed
+  const answer = window.confirm(
+      'Avez-vous bien pensez à sauvegarder avant de quitter la page ?'
+  )
+  // cancel the navigation and stay on the same page
+  if (!answer) return false
+})
+
+let internalErrorGlobal = ref(false)
+let saveErrorGlobal = ref(false)
+let saveSuccessGlobal = ref(false)
+
 </script>
 
 <template>
+  <Message v-if="internalErrorGlobal" severity="error" class="m-5" life="30000" closable="true">Erreur interne à l'application merci de réessayer plus tard</Message>
+  <Message v-if="saveErrorGlobal" severity="error" class="m-5" life="30000" closable="true">Erreur lors de la sauvegarde merci de réessayer plus tard</Message>
+  <Message v-if="saveSuccessGlobal" severity="success" class="m-5" life="30000" closable="true">Sauvegarde réussie !</Message>
+
 
 <div class="p-12">
   <div class="text-2xl flex items-center pb-4" :key="refresh">

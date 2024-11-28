@@ -4,6 +4,7 @@ import NavButton from './components/NavButton.vue'
 import NavDropdownGuild from "@/components/NavDropdownGuild.vue";
 import NavDropdownCharacter from "@/components/NavDropdownCharacter.vue";
 import NavDropDownProfil from "@/components/NavDropDownProfil.vue";
+import Message from 'primevue/message';
 
 import Button from 'primevue/button';
 

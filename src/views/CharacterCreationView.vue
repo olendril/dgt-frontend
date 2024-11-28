@@ -5,6 +5,7 @@ import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 import OptionsClasses from "@/components/OptionsClasses.vue";
 import OptionsServer from "@/components/OptionsServer.vue";
+import Message from "primevue/message";
 
 let name = ""
 let server = "Ombre"
@@ -32,10 +33,26 @@ async function createCharacter() {
       // en cas de réussite de la requête
       console.log(response.data);
 
+      successGlobalMessage.value = false
+      successGlobalMessage.value = true
       resolve(response.data);
       router.push({ path: "/" });
     })
     .catch(function (error) {
+
+      if (error.response && error.response.status === 404) {
+        InvalidGuildError.value = false
+        InvalidGuildError.value = true
+
+      } else if (error.response && error.response.status === 500) {
+        errorInternalGlobalMessage.value = false
+        errorInternalGlobalMessage.value = true
+
+      } else if (error.response && error.response.status === 400) {
+        errorInternalGlobalMessage.value = false
+        errorInternalGlobalMessage.value = true
+
+      }
       // en cas d’échec de la requête
       console.log(error);
       reject(error);
@@ -44,9 +61,14 @@ async function createCharacter() {
   })
 }
 
+let errorInternalGlobalMessage = ref(false)
+let successGlobalMessage = ref(false)
+let InvalidGuildError = ref(false)
 </script>
 
 <template>
+  <Message v-if="errorInternalGlobalMessage" severity="error" class="m-5" life="30000" closable="true">Erreur lors de la création du personnage merci de réessayer plus tard</Message>
+  <Message v-if="successGlobalMessage" severity="success" class="m-5" life="30000" closable="true">Sauvegarde réussie !</Message>
   <form class=" m-52 max-w-sm mx-auto shadow-lg rounded-lg p-8">
     <div class="mb-5">
       <label for="name" class="block mb-2 text-sm font-medium">Nom du personnage</label>
@@ -71,6 +93,8 @@ async function createCharacter() {
     <div class="mb-5">
       <label for="guild" class="block mb-2 text-sm font-medium">Code d'invitation de Guilde</label>
       <input type="text" id="guild" class="w-full p-2.5" placeholder="0000-0000-000" required v-model="guild"/>
+      <Message v-if="InvalidGuildError" severity="error" class="m-5" life="30000" >Code d'invitation Invalide</Message>
+
     </div>
     <button type="button" @click="createCharacter()" class="">Créer</button>
   </form>

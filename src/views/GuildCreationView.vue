@@ -4,6 +4,7 @@ import {ref} from "vue";
 import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 import OptionsServer from "@/components/OptionsServer.vue";
+import Message from "primevue/message";
 
 let name = ""
 let server = "Ombre"
@@ -22,23 +23,29 @@ async function createGuild() {
       }
     }).then(function (response) {
       // en cas de réussite de la requête
-      console.log(response.data);
-
+      successGlobalMessage.value = false
+      successGlobalMessage.value = true
       resolve(response.data);
-      router.push({ path: "/" });
     })
     .catch(function (error) {
       // en cas d’échec de la requête
       console.log(error);
+      errorGlobalMessage.value = false
+      errorGlobalMessage.value = true
       reject(error);
     })
 
   })
 }
 
+let successGlobalMessage = ref(false)
+let errorGlobalMessage = ref(false)
+
 </script>
 
 <template>
+  <Message v-if="errorGlobalMessage" severity="error" class="m-5" life="30000" closable="true">Erreur lors de la création de la guilde merci de réessayer plus tard</Message>
+  <Message v-if="successGlobalMessage" severity="success" class="m-5" life="30000" closable="true">Sauvegarde réussie !</Message>
   <form class=" m-52 max-w-sm mx-auto shadow-lg rounded-lg p-8">
     <div class="mb-5">
       <label for="name" class="block mb-2 text-sm font-medium">Nom de la guilde</label>

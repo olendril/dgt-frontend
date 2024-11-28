@@ -42,6 +42,7 @@ async function getGuildInfo() {
 
 import { onMounted } from 'vue';
 onMounted(() => getGuildInfo());
+
 </script>
 
 <template>
