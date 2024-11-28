@@ -21,7 +21,7 @@ function toggleDarkMode() {
       <NavDropdownGuild text="Guilde"/>
       <button class="translate-y-4">
         <RouterLink  to="/">
-          <img src="../dfs09-dofawa_orig.png" alt="acceuil" class="max-h-40" />
+          <img src="/dfs09-dofawa_orig.png" alt="acceuil" class="max-h-40" />
         </RouterLink>
       </button>
       <NavDropdownCharacter text="Personnages"/>

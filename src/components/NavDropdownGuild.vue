@@ -29,7 +29,7 @@ function requestGuild() {
   console.log(authStore.getAuthToken());
 
   return new Promise<string>(async (resolve, reject) => {
-      axios.get("http://localhost:8080/guilds", {
+      axios.get(import.meta.env.VITE_BACKEND_URL +  "/guilds", {
         headers: {
           'Authorization': 'Bearer ' + authStore.getAuthToken(),
         }

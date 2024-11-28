@@ -19,7 +19,7 @@ async function createCharacter() {
   return new Promise<string>(async (resolve, reject) => {
 
     console.log(name, server, guild);
-    axios.post("http://localhost:8080/characters", {
+    axios.post(import.meta.env.VITE_BACKEND_URL +  "/characters", {
       "name":name,
       "server":server,
       "guild_code": guild,

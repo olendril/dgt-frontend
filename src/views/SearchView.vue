@@ -19,7 +19,7 @@ const authStore = useAuthStore();
 
 async function getDungeonSuccess() {
   return new Promise<string>(async (resolve, reject) => {
-    axios.get("http://localhost:8080/success/dungeons", {
+    axios.get(import.meta.env.VITE_BACKEND_URL +  "/success/dungeons", {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }

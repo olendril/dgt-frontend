@@ -14,7 +14,7 @@ const authStore = useAuthStore();
 async function createGuild() {
   return new Promise<string>(async (resolve, reject) => {
 
-    axios.post("http://localhost:8080/guilds", {
+    axios.post(import.meta.env.VITE_BACKEND_URL +  "/guilds", {
       "name":name,
       "server":server,
     }, {

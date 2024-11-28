@@ -72,7 +72,7 @@ const clearFilter = () => {
 
 async function getCharacterInfo() {
   return new Promise<string>(async (resolve, reject) => {
-    axios.get("http://localhost:8080/characters/" + route.params.id, {
+    axios.get(import.meta.env.VITE_BACKEND_URL +  "/characters/" + route.params.id, {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }
@@ -96,7 +96,7 @@ async function getCharacterInfo() {
 
 async function getDungeonSuccess() {
   return new Promise<string>(async (resolve, reject) => {
-    axios.get("http://localhost:8080/success/dungeons", {
+    axios.get(import.meta.env.VITE_BACKEND_URL +  "/success/dungeons", {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }
@@ -135,7 +135,7 @@ async function submitSuccess() {
 
   return new Promise<string>(async (resolve, reject) => {
 
-    axios.put("http://localhost:8080/characters/" + character.id + "/success/dungeons", checkedSuccess, {
+    axios.put(import.meta.env.VITE_BACKEND_URL +  "/characters/" + character.id + "/success/dungeons", checkedSuccess, {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }
@@ -180,7 +180,7 @@ function buildTable() {
 async function updateLevel() {
   await new Promise<string>(async (resolve, reject) => {
 
-    axios.post("http://localhost:8080/characters/" + character.id + "/level/" + character.level, {}, {
+    axios.post(import.meta.env.BASE_URL +  "/characters/" + character.id + "/level/" + character.level, {}, {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }

@@ -35,7 +35,7 @@ let searchResult: SearchSuccess[] = []
 
 async function searchDungeonSuccess() {
   return new Promise<string>(async (resolve, reject) => {
-    axios.get("http://localhost:8080/characters/success/dungeons/"+ route.params.id + "/search", {
+    axios.get(import.meta.env.VITE_BACKEND_URL +  "/characters/success/dungeons/"+ route.params.id + "/search", {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }
@@ -59,7 +59,7 @@ let success: Map<string, string> = new Map<string, string>();
 
 async function getDungeonSuccess() {
   return new Promise<string>(async (resolve, reject) => {
-    axios.get("http://localhost:8080/success/dungeons", {
+    axios.get(import.meta.env.VITE_BACKEND_URL +  "/success/dungeons", {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }

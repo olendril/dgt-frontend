@@ -22,7 +22,7 @@ let refresh = ref(0)
 
 async function getGuildInfo() {
   return new Promise<string>(async (resolve, reject) => {
-    axios.get("http://localhost:8080/guilds/" + route.params.id, {
+    axios.get(import.meta.env.VITE_BACKEND_URL +  "/guilds/" + route.params.id, {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }
