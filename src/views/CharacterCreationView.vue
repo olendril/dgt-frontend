@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from "axios";
-import {ref, getCurrentInstance } from "vue";
+import {ref, getCurrentInstance, inject} from "vue";
 import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 import OptionsClasses from "@/components/OptionsClasses.vue";
@@ -11,9 +11,10 @@ let name = ""
 let server = "Ombre"
 let classe = "Iop"
 let guild = ""
-let level:number = 0
+let level:number = 1
 
 const authStore = useAuthStore();
+const refreshCharacters = inject('refreshCharacters')
 
 async function createCharacter() {
   return new Promise<string>(async (resolve, reject) => {
@@ -33,10 +34,10 @@ async function createCharacter() {
       // en cas de réussite de la requête
       console.log(response.data);
 
-      const instance = getCurrentInstance();
-      instance?.proxy?.$forceUpdate();
+      refreshCharacters()
       successGlobalMessage.value = false
       successGlobalMessage.value = true
+      router.push("/characters/" + response.data.id);
       resolve(response.data);
     })
     .catch(function (error) {
@@ -89,7 +90,7 @@ let InvalidGuildError = ref(false)
     </div>
     <div class="mb-5">
       <label for="level" class="block mb-2 text-sm font-medium">Niveau</label>
-      <input type="number" id="level" class="w-full p-2.5" placeholder="Dakal 4" required v-model="level"/>
+      <input type="number" id="level" class="w-full p-2.5" required v-model="level"/>
     </div>
     <div class="mb-5">
       <label for="guild" class="block mb-2 text-sm font-medium">Code d'invitation de Guilde</label>

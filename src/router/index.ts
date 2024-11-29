@@ -69,8 +69,9 @@ router.beforeEach((to, from, next) => {
       // User is authenticated, proceed to the route
       next();
     }
+  }else {
+    next()
   }
-  next()
 });
 
 export default router

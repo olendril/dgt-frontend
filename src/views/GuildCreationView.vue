@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from "axios";
-import {getCurrentInstance, ref} from "vue";
+import {getCurrentInstance, ref, inject } from "vue";
 import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 import OptionsServer from "@/components/OptionsServer.vue";
@@ -10,6 +10,7 @@ let name = ""
 let server = "Ombre"
 
 const authStore = useAuthStore();
+const refreshGuild = inject('refreshGuild')
 
 async function createGuild() {
   return new Promise<string>(async (resolve, reject) => {
@@ -25,9 +26,8 @@ async function createGuild() {
       // en cas de réussite de la requête
       successGlobalMessage.value = false
       successGlobalMessage.value = true
-      const instance = getCurrentInstance();
-      instance?.proxy?.$forceUpdate();
-      //window.location.reload()
+      refreshGuild()
+      router.push("/guild/"+response.data.id)
       resolve(response.data);
     })
     .catch(function (error) {
@@ -44,6 +44,7 @@ async function createGuild() {
 let successGlobalMessage = ref(false)
 let errorGlobalMessage = ref(false)
 
+const emit = defineEmits(['createdGuild'])
 </script>
 
 <template>

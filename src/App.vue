@@ -8,23 +8,37 @@ import Message from 'primevue/message';
 
 
 import Button from 'primevue/button';
+import {provide, ref} from "vue";
 
 function toggleDarkMode() {
   document.documentElement.classList.toggle('p-app-dark');
 }
+let refreshGuildKey = ref(0)
+function refreshGuild() {
+  refreshGuildKey.value += 1
+}
+
+let refreshCharactersKey = ref(0)
+function refreshCharacters() {
+  refreshCharactersKey.value += 1
+}
+
+provide('refreshGuild', refreshGuild)
+provide('refreshCharacters', refreshCharacters)
+
 </script>
 
 <template>
   <body class="flex flex-col h-screen justify-between">
     <nav class="flex space-x-4 justify-around max-h-28 shadow-lg text-2xl uppercase z-2">
       <NavButton text="Recherche" path="/search"/>
-      <NavDropdownGuild text="Guilde"/>
+      <NavDropdownGuild :key="refreshGuildKey" text="Guilde"/>
       <button class="translate-y-4">
         <RouterLink  to="/">
           <img src="/dfs09-dofawa_orig.png" alt="acceuil" class="max-h-40" />
         </RouterLink>
       </button>
-      <NavDropdownCharacter text="Personnages"/>
+      <NavDropdownCharacter :key="refreshCharactersKey" text="Personnages"/>
       <NavDropDownProfil text="Profil" />
     </nav>
 
