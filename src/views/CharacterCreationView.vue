@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from "axios";
-import {ref} from "vue";
+import {ref, getCurrentInstance } from "vue";
 import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 import OptionsClasses from "@/components/OptionsClasses.vue";
@@ -33,10 +33,11 @@ async function createCharacter() {
       // en cas de réussite de la requête
       console.log(response.data);
 
+      const instance = getCurrentInstance();
+      instance?.proxy?.$forceUpdate();
       successGlobalMessage.value = false
       successGlobalMessage.value = true
       resolve(response.data);
-      router.push({ path: "/" });
     })
     .catch(function (error) {
 

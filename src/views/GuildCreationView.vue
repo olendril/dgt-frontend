@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from "axios";
-import {ref} from "vue";
+import {getCurrentInstance, ref} from "vue";
 import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 import OptionsServer from "@/components/OptionsServer.vue";
@@ -25,6 +25,9 @@ async function createGuild() {
       // en cas de réussite de la requête
       successGlobalMessage.value = false
       successGlobalMessage.value = true
+      const instance = getCurrentInstance();
+      instance?.proxy?.$forceUpdate();
+      //window.location.reload()
       resolve(response.data);
     })
     .catch(function (error) {

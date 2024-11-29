@@ -181,7 +181,7 @@ function buildTable() {
 async function updateLevel() {
   await new Promise<string>(async (resolve, reject) => {
 
-    axios.post(import.meta.env.BASE_URL +  "/characters/" + character.id + "/level/" + character.level, {}, {
+    axios.post(import.meta.env.VITE_BACKEND_URL +  "/characters/" + character.id + "/level/" + character.level, {}, {
       headers: {
         'Authorization': 'Bearer ' + authStore.getAuthToken(),
       }
