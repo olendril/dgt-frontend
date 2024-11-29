@@ -76,7 +76,7 @@ const filters = ref({
 </script>
 
 <template>
-  <p class="text-2xl text-center pb-4">Recherche d'équipier :</p>
+  <p class="text-2xl text-center pb-4 pt-20">Recherche d'équipier :</p>
   <div class="flex items-center justify-center w-full basis-8 pb-12">
     <Tabs value="0">
       <TabList class="text-xl flex w-min">

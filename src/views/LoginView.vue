@@ -26,7 +26,7 @@ const onLogin = async () => {
         bon coéquipier pour vous accompagnier lors de vos prochaines aventures !</p>
       <p>Si vous êtes perdus n'hésitez pas à consulter la page bien commencer en cliquant sur le Dofawa après vous être connecté !</p>
     </div>
-    <div class="bg-gray-100 basis-52 grow align-middle items-center justify-center p-20 pl-60">
+    <div class="shadow-lg basis-52 grow align-middle items-center justify-center p-20 pl-60">
       <p class="text-2xl">
         Merci de vous connecter avec Discord pour accéder à l'application 😁
       </p>

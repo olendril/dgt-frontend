@@ -102,7 +102,7 @@ onMounted(() => searchDungeonSuccess());
       <Column sortable v-for="[key, value] of success"  :header="value">
         <template #body="slotProps">
           <div class="flex items-center gap-2">
-            <input type="checkbox" disabled :checked="isSuccessDone(slotProps.data.missing_success, key)" />
+            <input type="checkbox" variant="filled" disabled :checked="isSuccessDone(slotProps.data.missing_success, key)" />
           </div>
         </template>
       </Column>

@@ -70,6 +70,7 @@ const clearFilter = () => {
 };
 
 
+
 async function getCharacterInfo() {
   return new Promise<string>(async (resolve, reject) => {
     axios.get(import.meta.env.VITE_BACKEND_URL +  "/characters/" + route.params.id, {
@@ -294,7 +295,6 @@ let saveSuccessGlobal = ref(false)
                    :global-filter-fields="['name','successName','level']" sortField="level" :sortOrder="1">
           <template #header>
             <div class="flex justify-between">
-              <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
               <IconField>
                 <InputIcon>
                   <i class="pi pi-search" />
@@ -313,7 +313,7 @@ let saveSuccessGlobal = ref(false)
           <Column field="successDone" sortable  header="Fait" class="w-0.5">
             <template #body="slotProps">
               <div class="flex items-center gap-2">
-                <input type="checkbox" v-model="slotProps.data.successDone"/>
+                <input type="checkbox" v-model="slotProps.data.successDone" class="default:ring-2 checked:bg-amber-500"/>
               </div>
             </template>
           </Column>
