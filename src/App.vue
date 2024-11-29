@@ -47,7 +47,7 @@ provide('refreshCharacters', refreshCharacters)
 
     </div>
 
-    <footer class="flex space-x-4 justify-between max-h-28 p-2 z-1">
+    <footer class="flex space-x-4 justify-between max-h-28 p-2 z-1 border-t-2">
       <a href='https://ko-fi.com/O5O016KSBS' target='_blank'>
         <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
       </a>

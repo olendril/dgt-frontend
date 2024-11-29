@@ -27,6 +27,7 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import Inplace from 'primevue/inplace';
 import { InputNumber } from 'primevue';
+import ToggleSwitch from 'primevue/toggleswitch';
 
 const route = useRoute()
 const authStore = useAuthStore();
@@ -292,7 +293,7 @@ let saveSuccessGlobal = ref(false)
       <TabPanel value="0">
         <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
                    :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows :key="refresh" filterDisplay="row"
-                   :global-filter-fields="['name','successName','level']" sortField="level" :sortOrder="1">
+                   :global-filter-fields="['name','successName','level']" sortField="level" :sortOrder="1" removable-sort scrollable scrollHeight="800px">
           <template #header>
             <div class="flex justify-between">
               <IconField>
@@ -301,6 +302,10 @@ let saveSuccessGlobal = ref(false)
                 </InputIcon>
                 <InputText v-model="filters['global'].value" placeholder="Recherche" />
               </IconField>
+              <div class="flex items-center">
+                <p class="pr-2">Montrer succès faits :</p>
+                <ToggleSwitch v-model="checked" name="showDone" />
+              </div>
             </div>
           </template>
           <template #empty> Aucun résultat trouvé. </template>
@@ -310,11 +315,14 @@ let saveSuccessGlobal = ref(false)
               {{ data.name }}
             </template>
           </Column>
-          <Column field="successDone" sortable  header="Fait" class="w-0.5">
+          <Column field="successDone" header="Fait" class="w-0.5" dataType="boolean">
             <template #body="slotProps">
               <div class="flex items-center gap-2">
                 <input type="checkbox" v-model="slotProps.data.successDone" class="default:ring-2 checked:bg-amber-500"/>
               </div>
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <Checkbox v-model="filterModel.value" :indeterminate="filterModel.value === null" binary @change="filterCallback()" />
             </template>
           </Column>
           <Column field="successName" sortable filter-field="successName" header="Nom du Succés">
@@ -322,14 +330,7 @@ let saveSuccessGlobal = ref(false)
               {{ data.successName }}
             </template>
           </Column>
-          <Column field="level" sortable filter-field="level"  header="Niveau" class="w-0.5">
-            <template #filter="{ filterModel }">
-              <Slider v-model="filterModel.value" range></Slider>
-              <div class="flex items-center justify-between px-2">
-                <span>{{ filterModel.value ? filterModel.value[0] : 0 }}</span>
-                <span>{{ filterModel.value ? filterModel.value[1] : 200 }}</span>
-              </div>
-            </template>
+          <Column field="level" sortable filter-field="level"  header="Niveau" class="w-0.5" >
           </Column>
         </DataTable>
       </TabPanel>
