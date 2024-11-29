@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import {reactive, ref, watch} from "vue";
+import {inject, reactive, ref, watch} from "vue";
 import axios from "axios";
 import {useAuthStore} from "@/stores/authStore";
 import type {CharacterProps} from "@/components/NavDropdownCharacter.vue";
@@ -206,6 +206,7 @@ async function updateLevel() {
 import { onMounted } from 'vue';
 import router from "@/router";
 import Message from "primevue/message";
+import Dialog from 'primevue/dialog';
 onMounted(() => getCharacterInfo());
 onMounted(() => getDungeonSuccess());
 onMounted(() => {
@@ -228,11 +229,14 @@ watch(
 )
 
 onBeforeRouteLeave((to, from) => {
-  const answer = window.confirm(
-      'Avez-vous bien pensez à sauvegarder avant de quitter la page ?'
-  )
-  // cancel the navigation and stay on the same page
-  if (!answer) return false
+  if (deleted == false) {
+    const answer = window.confirm(
+        'Avez-vous bien pensez à sauvegarder avant de quitter la page ?'
+    )
+    // cancel the navigation and stay on the same page
+    if (!answer) return false
+  }
+  return true
 })
 
 const userData = ref()
@@ -240,16 +244,52 @@ const userData = ref()
 // same as beforeRouteUpdate option but with no access to `this`
 onBeforeRouteUpdate(async (to, from) => {
   // only fetch the user if the id changed as maybe only the query or the hash changed
-  const answer = window.confirm(
-      'Avez-vous bien pensez à sauvegarder avant de quitter la page ?'
-  )
-  // cancel the navigation and stay on the same page
-  if (!answer) return false
+  if (deleted == false) {
+    const answer = window.confirm(
+        'Avez-vous bien pensez à sauvegarder avant de quitter la page ?'
+    )
+    // cancel the navigation and stay on the same page
+    if (!answer) return false
+  }
+  return true
+
 })
+
+const refreshCharacters = inject('refreshCharacters')
+
 
 let internalErrorGlobal = ref(false)
 let saveErrorGlobal = ref(false)
 let saveSuccessGlobal = ref(false)
+let deleteErrorGlobal = ref(false)
+let deleted = false
+let deleteModal = ref(false)
+
+async function deleteCharacter() {
+  deleted = true
+
+  return new Promise<string>(async (resolve, reject) => {
+    axios.delete(import.meta.env.VITE_BACKEND_URL +  "/characters/" + character.id , {
+      headers: {
+        'Authorization': 'Bearer ' + authStore.getAuthToken(),
+      }
+    }).then(function (response) {
+      // en cas de réussite de la requête
+      refreshCharacters()
+      router.push('/')
+      resolve(response.data);
+    })
+        .catch(function (error) {
+          // en cas d’échec de la requête
+          deleted = false
+          deleteErrorGlobal.value = false
+          deleteErrorGlobal.value = true
+          console.log(error);
+          reject(error);
+        })
+
+  })
+}
 
 </script>
 
@@ -257,9 +297,17 @@ let saveSuccessGlobal = ref(false)
   <Message v-if="internalErrorGlobal" severity="error" class="m-5" life="30000" closable="true">Erreur interne à l'application merci de réessayer plus tard</Message>
   <Message v-if="saveErrorGlobal" severity="error" class="m-5" life="30000" closable="true">Erreur lors de la sauvegarde merci de réessayer plus tard</Message>
   <Message v-if="saveSuccessGlobal" severity="success" class="m-5" life="30000" closable="true">Sauvegarde réussie !</Message>
+  <Message v-if="deleteErrorGlobal" severity="error" class="m-5" life="30000" closable="true">Echec lors de la suppression</Message>
 
+  <Dialog v-model:visible="deleteModal" modal header="Suppression du Personnage" :style="{ width: '25rem' }">
+    <span class="text-surface-500 dark:text-surface-400 block mb-8">Êtes-vous sûr de vouloir supprimer votre personnage ?</span>
+    <div class="flex justify-end gap-2">
+      <Button type="button" label="Annuler" severity="secondary" @click="deleteModal = false"></Button>
+      <Button type="button" label="Supprimer" severity="danger" @click="deleteModal = false; deleteCharacter()"></Button>
+    </div>
+  </Dialog>
 
-<div class="p-12">
+  <div class="p-12">
   <div class="text-2xl flex items-center pb-4" :key="refresh">
     <p class="text-4xl font-bold underline pb-2 pr-2">{{ character.name }}</p>
     <p>- Niveau.</p>
@@ -282,6 +330,7 @@ let saveSuccessGlobal = ref(false)
       SAUVEGARDER
     </button>
     <p class="pl-2">!</p>
+    <button @click="deleteModal = true" class="bg-red-600 rounded-lg p-1">SUPPRIMER LE PERSONNAGE</button>
   </div>
   <Tabs value="0">
     <TabList class="text-xl flex w-min">
