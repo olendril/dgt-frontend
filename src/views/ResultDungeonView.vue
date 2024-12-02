@@ -32,6 +32,10 @@ interface SearchSuccess {
 }
 
 let searchResult: SearchSuccess[] = []
+let printedResult: SearchSuccess[] = []
+let guilds:string[] = []
+let selectedGuilds:string[] = []
+
 
 async function searchDungeonSuccess() {
   return new Promise<string>(async (resolve, reject) => {
@@ -42,7 +46,14 @@ async function searchDungeonSuccess() {
     }).then(function (response) {
       // en cas de réussite de la requête
       searchResult = response.data
+      printedResult = response.data
+      for (let i = 0; i < searchResult.length; i++) {
+        if (!guilds.includes(searchResult[i].guild_name)) {
+          guilds.push(searchResult[i].guild_name)
+        }
+      }
       console.log(searchResult);
+      console.log(guilds);
       refresh.value += 1
       resolve(response.data);
     })
@@ -86,8 +97,23 @@ function isSuccessDone(missingSuccess: string[] , success: string): boolean {
 
 import { onMounted } from 'vue';
 import {FilterMatchMode, FilterOperator} from "@primevue/core/api";
-onMounted(() => getDungeonSuccess());
+import {MultiSelect} from "primevue";
+  onMounted(() => getDungeonSuccess());
 onMounted(() => searchDungeonSuccess());
+
+const filters = ref({
+  guild_name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+function updateGuild() {
+  printedResult = []
+  for (let i = 0; i < searchResult.length ; i++) {
+    if (selectedGuilds.includes(searchResult[i].guild_name)) {
+      printedResult.push(searchResult[i]);
+    }
+  }
+  refresh.value += 1
+}
 
 </script>
 <template>
@@ -95,18 +121,24 @@ onMounted(() => searchDungeonSuccess());
     <p>Résultats :</p>
   </div>
   <div class="p-12">
-    <DataTable :value="searchResult" :key="refresh"  sortField="level" :sortOrder="1" paginator :rows="10"
-               :rowsPerPageOptions="[5, 10, 20, 50]">
-      <Column field="character_name" sortable header="Name" > </Column>
-      <Column field="level" sortable header="Level" > </Column>
+    <MultiSelect v-model="selectedGuilds" :options="guilds" placeholder="Guildes sélectionnées"
+                 :maxSelectedLabels="3" class="w-full md:w-80" @change="updateGuild" />
+
+    <DataTable :filter="filters" :value="printedResult" :key="refresh" sortField="level" filterDisplay="row"  :sortOrder="1" paginator :rows="10"
+               :rowsPerPageOptions="[5, 10, 20, 50]" :globalFilterFields="['guild_name']">
+      <template #empty> Aucun personnage ne correspond à la recherche </template>
+      <template #loading> Loading customers data. Please wait. </template>
+      <Column field="guild_name" :showFilterMenu="false" header="Nom de Guilde" >
+      </Column>
+      <Column field="character_name" sortable header="Nom du Personnage" > </Column>
+      <Column field="level" sortable header="Niveau" > </Column>
       <Column sortable v-for="[key, value] of success"  :header="value">
         <template #body="slotProps">
           <div class="flex items-center gap-2">
-            <input type="checkbox" variant="filled" disabled :checked="isSuccessDone(slotProps.data.missing_success, key)" />
+            <input type="checkbox" disabled :checked="isSuccessDone(slotProps.data.missing_success, key)" />
           </div>
         </template>
       </Column>
-
     </DataTable>
   </div>
 </template>
