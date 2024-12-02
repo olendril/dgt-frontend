@@ -121,8 +121,10 @@ function updateGuild() {
     <p>Résultats :</p>
   </div>
   <div class="p-12">
+    <div class="pb-4">
     <MultiSelect v-model="selectedGuilds" :options="guilds" placeholder="Guildes sélectionnées"
                  :maxSelectedLabels="3" class="w-full md:w-80" @change="updateGuild" />
+    </div>
 
     <DataTable :filter="filters" :value="printedResult" :key="refresh" sortField="level" filterDisplay="row"  :sortOrder="1" paginator :rows="10"
                :rowsPerPageOptions="[5, 10, 20, 50]" :globalFilterFields="['guild_name']">
