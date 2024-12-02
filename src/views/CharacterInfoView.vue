@@ -372,9 +372,6 @@ async function deleteCharacter() {
                   <input type="checkbox" v-model="slotProps.data.successDone" class="default:ring-2 checked:bg-amber-500"/>
                 </div>
               </template>
-              <template #filter="{ filterModel, filterCallback }">
-                <Checkbox v-model="filterModel.value" :indeterminate="filterModel.value === null" binary @change="filterCallback()" />
-              </template>
             </Column>
             <Column field="successName" sortable filter-field="successName" header="Nom du Succés">
               <template #body="{ data }">

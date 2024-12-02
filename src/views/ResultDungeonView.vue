@@ -98,6 +98,7 @@ function isSuccessDone(missingSuccess: string[] , success: string): boolean {
 import { onMounted } from 'vue';
 import {FilterMatchMode, FilterOperator} from "@primevue/core/api";
 import {MultiSelect} from "primevue";
+import Checkbox from 'primevue/checkbox';
   onMounted(() => getDungeonSuccess());
 onMounted(() => searchDungeonSuccess());
 
@@ -137,7 +138,7 @@ function updateGuild() {
       <Column sortable v-for="[key, value] of success"  :header="value">
         <template #body="slotProps">
           <div class="flex items-center gap-2">
-            <input type="checkbox" disabled :checked="isSuccessDone(slotProps.data.missing_success, key)" />
+            <i class="pi" :class="{ 'pi-star-fill text-gray-500 ': isSuccessDone(slotProps.data.missing_success, key), 'pi-star text-amber-500': !isSuccessDone(slotProps.data.missing_success, key) }"></i>
           </div>
         </template>
       </Column>
