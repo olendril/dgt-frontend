@@ -147,6 +147,7 @@ async function submitSuccess() {
       saveSuccessGlobal.value = false
       saveSuccessGlobal.value = true
 
+      window.location.reload()
       resolve(response.data);
     })
         .catch(function (error) {
