@@ -3,26 +3,24 @@ import Button from 'primevue/button';
 import {ref} from "vue";
 
 let showDropdown = ref(false);
+let idList = ref(0)
+
 
 const disconnect = () => {
-  allCookies = document.cookie;
-  document.cookie = "";
+  document.cookie = 'access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;;'
+  window.location.reload()
 }
 
 </script>
 
 <template>
-  <div @mouseover="showDropdown = true" @mouseleave="showDropdown = false" class="align-middle grow basis-8 uppercase rid-cols-1 text-center">
-    <button   class="w-full uppercase min-h-28 hover:bg-orange-300">
-      Profil
+<div @mouseover="showDropdown = true" @mouseleave="showDropdown = false" class="align-middle grow basis-8 uppercase rid-cols-1 text-center">
+    <button @click="disconnect" class="w-full uppercase min-h-28 hover:bg-orange-300">
+      DÉCONNEXION
     </button>
 
-    <ul class="bg-dofawa_orange  border-y border-separator_orange" v-if="showDropdown">
-      <li class="hover:bg-orange-300 bg-white text-black border-t border-separator_orange">
-        <button variant="text" @click="disconnect()">DÉCONNEXION</button>
-      </li>
-    </ul>
   </div>
+
 </template>
 
 <style scoped>

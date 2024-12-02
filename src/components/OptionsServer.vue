@@ -20,6 +20,8 @@
   <option value="Dakal 8">Dakal 8</option>
   <option value="Dakal 9">Dakal 9</option>
   <option value="Dakal 10">Dakal 10</option>
+  <option value="Dakal 10">Dakal 11</option>
+  <option value="Dakal 10">Dakal 12</option>
   <option value="Mikhal 1">Mikhal 1</option>
   <option value="Mikhal 2">Mikhal 2</option>
   <option value="Brial 1">Brial 1</option>
