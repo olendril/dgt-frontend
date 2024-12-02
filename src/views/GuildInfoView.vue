@@ -43,9 +43,12 @@ async function getGuildInfo() {
 import { onMounted } from 'vue';
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
+import ToggleButton from 'primevue/togglebutton';
+import Inplace from 'primevue/inplace';
 import router from "@/router";
 import Message from "primevue/message";
 onMounted(() => getGuildInfo());
+
 
 let deleted = false
 let deleteModal = ref(false)
@@ -80,6 +83,14 @@ async function deleteGuild() {
 
   })
 }
+
+
+function copyText () {
+  /* Copy selected text into clipboard */
+  navigator.clipboard.writeText(guild.code);
+}
+
+
 </script>
 
 <template>
@@ -92,14 +103,22 @@ async function deleteGuild() {
       <Button type="button" label="Supprimer" severity="danger" @click="deleteModal = false; deleteGuild()"></Button>
     </div>
   </Dialog>
-  <p class="m-52 max-w-sm mx-auto shadow-lg rounded-lg p-8" :key="refresh">
-    Nom : {{guild.name}}
-    <br>
-    Code d'invitation : {{guild.code}}
-    <br>
-    Server : {{guild.server}}
-  </p>
-  <button @click="deleteModal = true" class="bg-red-600 rounded-lg p-1">SUPPRIMER LA GUILDE</button>
+  <div class="max-w-max mx-auto shadow-lg rounded-lg p-12 flex-col" :key="refresh">
+    <p class="text-2xl">{{guild.name}}</p>
+    <div class="flex items-center">
+      <p>Code d'invitation : </p>
+        <Inplace>
+          <template #display> <p class="underline">Afficher</p> </template>
+          <template #content>
+            <p class="pl-2">{{guild.code}}</p>
+          </template>
+        </Inplace>
+      <ToggleButton v-model="checked" @click="copyText()" offLabel="Copier" onLabel="OK!" offIcon="pi pi-pen-to-square" onIcon="pi pi-check" iconPos="right" />
+    </div>
+    <p>Server : {{guild.server}}
+    </p>
+    <button @click="deleteModal = true" class="bg-red-600 text-white rounded-lg p-1 mt-2">SUPPRIMER LA GUILDE</button>
+  </div>
 
 </template>
 

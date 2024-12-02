@@ -28,6 +28,7 @@ import InputIcon from 'primevue/inputicon';
 import Inplace from 'primevue/inplace';
 import { InputNumber } from 'primevue';
 import ToggleSwitch from 'primevue/toggleswitch';
+import ScrollTop from 'primevue/scrolltop';
 
 const route = useRoute()
 const authStore = useAuthStore();
@@ -307,6 +308,8 @@ async function deleteCharacter() {
     </div>
   </Dialog>
 
+  <ScrollTop />
+
   <div class="p-12">
   <div class="text-2xl flex items-center pb-4" :key="refresh">
     <p class="text-4xl font-bold underline pb-2 pr-2">{{ character.name }}</p>
@@ -323,71 +326,74 @@ async function deleteCharacter() {
       </template>
     </Inplace>
   </div>
-
   <div class="flex items-center pb-4">
     <p class="pr-2">N'oublie pas de</p>
     <button @click="submitSuccess" class="bg-dofawa_orange rounded-lg p-1">
       SAUVEGARDER
     </button>
     <p class="pl-2">!</p>
-    <button @click="deleteModal = true" class="bg-red-600 rounded-lg p-1">SUPPRIMER LE PERSONNAGE</button>
   </div>
-  <Tabs value="0">
-    <TabList class="text-xl flex w-min">
-      <Tab value="0">Donjons</Tab>
-      <Tab disabled>Avis de Recherche</Tab>
-      <Tab disabled>Autres</Tab>
-    </TabList>
-    <TabPanels>
-      <TabPanel value="0">
-        <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
-                   :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows :key="refresh" filterDisplay="row"
-                   :global-filter-fields="['name','successName','level']" sortField="level" :sortOrder="1" removable-sort scrollable scrollHeight="800px">
-          <template #header>
-            <div class="flex justify-between">
-              <IconField>
-                <InputIcon>
-                  <i class="pi pi-search" />
-                </InputIcon>
-                <InputText v-model="filters['global'].value" placeholder="Recherche" />
-              </IconField>
-              <div class="flex items-center">
-                <p class="pr-2">Montrer succès faits :</p>
-                <ToggleSwitch v-model="checked" name="showDone" />
-              </div>
-            </div>
-          </template>
-          <template #empty> Aucun résultat trouvé. </template>
-          <template #loading> Chargement des données, patience est mère de vertue! </template>
-          <Column field="name" sortable filter-field="name" header="Nom" class="text-xl">
-            <template #body="{ data }">
-              {{ data.name }}
-            </template>
-          </Column>
-          <Column field="successDone" header="Fait" class="w-0.5" dataType="boolean">
-            <template #body="slotProps">
-              <div class="flex items-center gap-2">
-                <input type="checkbox" v-model="slotProps.data.successDone" class="default:ring-2 checked:bg-amber-500"/>
+  <div class="pt-4 pl-12 pr-12">
+    <Tabs value="0">
+      <TabList class="text-xl flex w-min">
+        <Tab value="0">Donjons</Tab>
+        <Tab disabled>Avis de Recherche</Tab>
+        <Tab disabled>Autres</Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel value="0">
+          <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
+                     :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows :key="refresh" filterDisplay="row"
+                     :global-filter-fields="['name','successName','level']" sortField="level" :sortOrder="1" removable-sort>
+            <template #header>
+              <div class="flex justify-between">
+                <IconField>
+                  <InputIcon>
+                    <i class="pi pi-search" />
+                  </InputIcon>
+                  <InputText v-model="filters['global'].value" placeholder="Recherche" />
+                </IconField>
+                <div class="flex items-center">
+                  <p class="pr-2">Montrer succès faits :</p>
+                  <ToggleSwitch v-model="checked" name="showDone" />
+                </div>
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <Checkbox v-model="filterModel.value" :indeterminate="filterModel.value === null" binary @change="filterCallback()" />
-            </template>
-          </Column>
-          <Column field="successName" sortable filter-field="successName" header="Nom du Succés">
-            <template #body="{ data }">
-              {{ data.successName }}
-            </template>
-          </Column>
-          <Column field="level" sortable filter-field="level"  header="Niveau" class="w-0.5" >
-          </Column>
-        </DataTable>
-      </TabPanel>
-    </TabPanels>
-  </Tabs>
-  <button @click="submitSuccess" class="bg-dofawa_orange rounded-lg p-8 m-20">
-    Sauvegarder
-  </button>
+            <template #empty> Aucun résultat trouvé. </template>
+            <template #loading> Chargement des données, patience est mère de vertue! </template>
+            <Column field="name" sortable filter-field="name" header="Nom" class="text-xl">
+              <template #body="{ data }">
+                {{ data.name }}
+              </template>
+            </Column>
+            <Column field="successDone" header="Fait" class="w-0.5" dataType="boolean">
+              <template #body="slotProps">
+                <div class="flex items-center gap-2">
+                  <input type="checkbox" v-model="slotProps.data.successDone" class="default:ring-2 checked:bg-amber-500"/>
+                </div>
+              </template>
+              <template #filter="{ filterModel, filterCallback }">
+                <Checkbox v-model="filterModel.value" :indeterminate="filterModel.value === null" binary @change="filterCallback()" />
+              </template>
+            </Column>
+            <Column field="successName" sortable filter-field="successName" header="Nom du Succés">
+              <template #body="{ data }">
+                {{ data.successName }}
+              </template>
+            </Column>
+            <Column field="level" sortable filter-field="level"  header="Niveau" class="w-0.5" >
+            </Column>
+          </DataTable>
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  </div>
+  <div class="flex justify-between">
+    <button @click="submitSuccess" class="bg-dofawa_orange rounded-lg p-8 m-20">
+      Sauvegarder
+    </button>
+    <button @click="deleteModal = true" class="bg-red-600 text-white rounded-lg p-8 m-20">SUPPRIMER LE PERSONNAGE</button>
+  </div>
 </div>
 
 </template>
