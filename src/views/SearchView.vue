@@ -86,7 +86,7 @@ const filters = ref({
       </TabList>
       <TabPanels>
         <TabPanel value="0">
-          <DataTable  v-model:filters="filters" :value="dungeons" :key="refresh" filterDisplay="row" sortField="level"  :sortOrder="1" paginator :rows="10"
+          <DataTable  v-model:filters="filters" :value="dungeons" :key="refresh" sortField="level"  :sortOrder="1" paginator :rows="10"
                      :rowsPerPageOptions="[5, 10, 20, 50]" :globalFilterFields="['name', 'level']">
             <template #header>
               <div class="w-full flex items-center justify-center">

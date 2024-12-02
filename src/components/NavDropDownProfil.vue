@@ -17,10 +17,9 @@ const disconnect = () => {
       Profil
     </button>
 
-    <ul class="bg-dofawa_orange  border-y border-separator_orange" v-if="showDropdown" :key="idList">
+    <ul class="bg-dofawa_orange  border-y border-separator_orange" v-if="showDropdown">
       <li class="hover:bg-orange-300 bg-white text-black border-t border-separator_orange">
-<!--        Déconnection-->
-        <Button label="DECONNEXION" variant="text" @click="disconnect()"></Button>
+        <button variant="text" @click="disconnect()">DÉCONNEXION</button>
       </li>
     </ul>
   </div>
