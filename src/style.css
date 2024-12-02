@@ -2,6 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-.checkbox {
-    background-color: orange;
-}

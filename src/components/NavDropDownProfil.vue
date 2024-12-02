@@ -5,7 +5,8 @@ import {ref} from "vue";
 let showDropdown = ref(false);
 
 const disconnect = () => {
-  document.cookie = "access_token; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  allCookies = document.cookie;
+  document.cookie = "";
 }
 
 </script>
@@ -19,7 +20,7 @@ const disconnect = () => {
     <ul class="bg-dofawa_orange  border-y border-separator_orange" v-if="showDropdown" :key="idList">
       <li class="hover:bg-orange-300 bg-white text-black border-t border-separator_orange">
 <!--        Déconnection-->
-        <Button label="DECONNECTION" variant="text" @click="disconnect()"></Button>
+        <Button label="DECONNEXION" variant="text" @click="disconnect()"></Button>
       </li>
     </ul>
   </div>
