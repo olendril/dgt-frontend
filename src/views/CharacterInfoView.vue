@@ -209,6 +209,7 @@ import { onMounted } from 'vue';
 import router from "@/router";
 import Message from "primevue/message";
 import Dialog from 'primevue/dialog';
+import Checkbox from 'primevue/checkbox';
 onMounted(() => getCharacterInfo());
 onMounted(() => getDungeonSuccess());
 onMounted(() => {
@@ -370,7 +371,7 @@ async function deleteCharacter() {
             <Column field="successDone" header="Fait" class="w-0.5" dataType="boolean">
               <template #body="slotProps">
                 <div class="flex items-center gap-2">
-                  <input type="checkbox" v-model="slotProps.data.successDone" class="default:ring-2 checked:bg-amber-500"/>
+                  <Checkbox v-model="slotProps.data.successDone" binary class="default:ring-2 checked:bg-amber-500" />
                 </div>
               </template>
             </Column>
