@@ -59,7 +59,7 @@ const initFilters = () => {
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
     successName: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-    successDone: { value: null, matchMode: FilterMatchMode.EQUALS },
+    successDone: { value: false, matchMode: FilterMatchMode.EQUALS },
     level: { value: [0, 200], matchMode: FilterMatchMode.BETWEEN }
   };
 };
@@ -353,7 +353,7 @@ async function deleteCharacter() {
               </IconField>
               <div class="flex items-center">
                 <p class="pr-2">Montrer succès faits :</p>
-                <ToggleSwitch v-model="checked" name="showDone" />
+                <ToggleSwitch  v-model="filters['successDone'].value" name="showDone" />
               </div>
             </div>
           </template>
