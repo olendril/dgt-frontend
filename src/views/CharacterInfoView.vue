@@ -345,7 +345,7 @@ async function deleteCharacter() {
       <TabPanels>
         <TabPanel value="0">
           <DataTable v-model:filters="filters" :value="dungeonsTable" groupRowsBy="name" rowGroupMode="rowspan" paginator  :rows="50"
-                     :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows :key="refresh" filterDisplay="row"
+                     :rowsPerPageOptions="[ 10, 20, 50, 200, 500]" stripedRows :key="refresh"
                      :global-filter-fields="['name','successName','level']" sortField="level" :sortOrder="1" removable-sort>
             <template #header>
               <div class="flex justify-between">

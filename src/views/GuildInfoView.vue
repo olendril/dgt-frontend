@@ -110,7 +110,7 @@ function copyText () {
         <Inplace>
           <template #display> <p class="underline">Afficher</p> </template>
           <template #content>
-            <p class="pl-2">{{guild.code}}</p>
+            <p class="pl-2 pr-2">{{guild.code}}</p>
           </template>
         </Inplace>
       <ToggleButton v-model="checked" @click="copyText()" offLabel="Copier" onLabel="OK!" offIcon="pi pi-pen-to-square" onIcon="pi pi-check" iconPos="right" />

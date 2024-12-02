@@ -127,13 +127,13 @@ function updateGuild() {
                  :maxSelectedLabels="3" class="w-full md:w-80" @change="updateGuild" />
     </div>
 
-    <DataTable :filter="filters" :value="printedResult" :key="refresh" sortField="level" filterDisplay="row"  :sortOrder="1" paginator :rows="10"
+    <DataTable :filter="filters" :value="printedResult" :key="refresh" sortField="level"  :sortOrder="1" paginator :rows="10"
                :rowsPerPageOptions="[5, 10, 20, 50]" :globalFilterFields="['guild_name']">
       <template #empty> Aucun personnage ne correspond à la recherche </template>
       <template #loading> Loading customers data. Please wait. </template>
       <Column field="guild_name" :showFilterMenu="false" header="Nom de Guilde" >
       </Column>
-      <Column field="character_name" sortable header="Nom du Personnage" > </Column>
+      <Column field="character_name" sortable header="Nom du Personnage" class="text-xl" > </Column>
       <Column field="level" sortable header="Niveau" > </Column>
       <Column sortable v-for="[key, value] of success"  :header="value">
         <template #body="slotProps">
